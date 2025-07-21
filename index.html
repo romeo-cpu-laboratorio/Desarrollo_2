@@ -83,7 +83,7 @@
     .balloon {
       position: fixed;
       z-index: 0;
-      width: clamp(58px, 7.25vw, 87px);
+      width: clamp(58px, 7.25vw, 87px); /* 40px base * 1.45 = 58px min, 60px * 1.45 = 87px max */
       height: clamp(58px, 7.25vw, 87px);
       border-radius: 50%;
       border: 1.5px solid rgba(0, 0, 0, 0.15);
@@ -170,23 +170,38 @@
     }
 
     function generateBalloons() {
+      // Colores saturados y femeninos para resaltar
       const colors = [
-        'rgba(219, 20, 60, 0.95)', 'rgba(199, 21, 133, 0.95)', 'rgba(186, 85, 211, 0.95)',
-        'rgba(218, 112, 214, 0.95)', 'rgba(255, 20, 147, 0.95)', 'rgba(255, 0, 255, 0.95)',
-        'rgba(138, 43, 226, 0.95)', 'rgba(147, 112, 219, 0.95)', 'rgba(123, 104, 238, 0.95)',
-        'rgba(72, 209, 204, 0.95)', 'rgba(255, 99, 71, 0.95)', 'rgba(255, 140, 0, 0.95)',
+        'rgba(219, 20, 60, 0.95)',    // rojo fuerte
+        'rgba(199, 21, 133, 0.95)',   // medium violet red
+        'rgba(186, 85, 211, 0.95)',   // medium orchid
+        'rgba(218, 112, 214, 0.95)',  // orchid
+        'rgba(255, 20, 147, 0.95)',   // deep pink
+        'rgba(255, 0, 255, 0.95)',    // magenta fuerte
+        'rgba(138, 43, 226, 0.95)',   // blue violet
+        'rgba(147, 112, 219, 0.95)',  // medium purple
+        'rgba(123, 104, 238, 0.95)',  // medium slate blue
+        'rgba(72, 209, 204, 0.95)',   // medium turquoise saturado
+        'rgba(255, 99, 71, 0.95)',    // tomato
+        'rgba(255, 140, 0, 0.95)',    // dark orange
       ];
+
       const balloonCount = 350;
       const minTop = 5;
       const maxTop = 180;
+
       for (let i = 0; i < balloonCount; i++) {
         const balloon = document.createElement('div');
         balloon.className = 'balloon';
+
         balloon.style.left = `${Math.random() * 100}%`;
         balloon.style.top = `${Math.random() * (maxTop - minTop) + minTop}px`;
+
         const color = colors[i % colors.length];
         balloon.style.background = `radial-gradient(circle at 30% 30%, ${color}, rgba(255, 255, 255, 0.85))`;
+
         balloon.style.animationDuration = (4 + Math.random() * 3) + 's';
+
         document.body.appendChild(balloon);
       }
     }
@@ -227,14 +242,15 @@
         message.style.fontSize = '2.4rem';
         message.style.color = '#6a1b9a';
         message.style.fontFamily = "'Kaushan Script', cursive";
+        message.style.margin = '40px auto 0';
+        message.style.animation = 'fallDown 1s ease-out forwards, swing 2s infinite ease-in-out';
+        message.style.opacity = 0;
+        message.style.transform = 'translateY(-200px)';
         message.style.textAlign = 'center';
-        message.style.position = 'fixed';
-        message.style.top = '50%';
-        message.style.left = '50%';
-        message.style.transform = 'translate(-50%, -50%)';
-        message.style.animation = 'fadeIn 2s ease-out, swing 2s infinite ease-in-out';
-        message.style.opacity = 1;
-        message.style.zIndex = 999;
+        message.style.position = 'relative';
+        message.style.maxWidth = '90%';
+        message.style.wordWrap = 'break-word';
+
         document.body.appendChild(message);
         card.remove();
         intervalId = setInterval(confettiBoom, 1000);
