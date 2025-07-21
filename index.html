@@ -78,6 +78,13 @@
       animation: pulse 1.5s infinite;
       max-width: 90%;
       font-family: 'Kaushan Script', cursive;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.2s ease, transform 0.1s ease;
+    }
+
+    .secret-btn:active {
+      transform: scale(0.95);
     }
 
     #closeBtn {
@@ -194,7 +201,7 @@
         'rgba(255, 99, 71, 0.95)',
         'rgba(255, 140, 0, 0.95)',
       ];
-      const balloonCount = 100;  // Reducido para mejor rendimiento móvil
+      const balloonCount = 100;
       const minTop = 5;
       const maxTop = 180;
       for (let i = 0; i < balloonCount; i++) {
@@ -214,30 +221,23 @@
       confettiBoom();
       const card = document.getElementById("main-card");
       card.style.display = "block";
-
-      // Animación más rápida
-      document.getElementById("main-title").style.animation = "fadeIn 1s ease-in-out forwards";
-
+      document.getElementById("main-title").style.animation = "fadeIn 1.2s ease-in-out forwards";
       setTimeout(() => {
-        document.getElementById("message-1").style.animation = "fadeInText 0.8s ease-in-out forwards";
+        document.getElementById("message-1").style.animation = "fadeInText 1.1s ease-in-out forwards";
         confettiBoom();
-      }, 1000);
-
+      }, 1400);
       setTimeout(() => {
-        document.getElementById("message-2").style.animation = "fadeInText 0.8s ease-in-out forwards";
-      }, 1800);
-
+        document.getElementById("message-2").style.animation = "fadeInText 1.1s ease-in-out forwards";
+      }, 2700);
       setTimeout(() => {
         const secret = document.getElementById("secret-message");
         secret.style.display = "block";
-        secret.style.animation = "fadeInText 0.8s ease-in-out forwards";
+        secret.style.animation = "fadeInText 1.1s ease-in-out forwards";
         confettiBoom();
-      }, 2600);
-
+      }, 4100);
       setTimeout(() => {
         document.getElementById("closeBtn").style.display = 'inline-block';
-      }, 3200);
-
+      }, 5400);
       intervalId = setInterval(confettiBoom, 1000);
       generateBalloons();
     }
@@ -248,7 +248,7 @@
       card.style.animation = "explodeOut 1s ease forwards";
       setTimeout(() => {
         const message = document.createElement('div');
-        message.innerText = '🫶Con cariño, Rudy 🤗';
+        message.innerText = '��Con cariño, Rudy 🤗';
         message.style.fontSize = '2.4rem';
         message.style.color = '#6a1b9a';
         message.style.fontFamily = "'Kaushan Script', cursive";
@@ -269,3 +269,4 @@
   </script>
 </body>
 </html>
+
