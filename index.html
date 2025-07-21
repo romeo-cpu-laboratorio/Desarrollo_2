@@ -58,7 +58,6 @@
       display: none;
     }
 
-    /* Aquí el estilo para la línea centrada */
     #secret-message .closing {
       text-align: center;
       font-weight: 600;
@@ -195,7 +194,7 @@
         'rgba(255, 99, 71, 0.95)',
         'rgba(255, 140, 0, 0.95)',
       ];
-      const balloonCount = 350;
+      const balloonCount = 100;  // Reducido para mejor rendimiento móvil
       const minTop = 5;
       const maxTop = 180;
       for (let i = 0; i < balloonCount; i++) {
@@ -215,23 +214,30 @@
       confettiBoom();
       const card = document.getElementById("main-card");
       card.style.display = "block";
-      document.getElementById("main-title").style.animation = "fadeIn 2s ease-in-out forwards";
+
+      // Animación más rápida
+      document.getElementById("main-title").style.animation = "fadeIn 1s ease-in-out forwards";
+
       setTimeout(() => {
-        document.getElementById("message-1").style.animation = "fadeInText 1.5s ease-in-out forwards";
+        document.getElementById("message-1").style.animation = "fadeInText 0.8s ease-in-out forwards";
         confettiBoom();
-      }, 3000);
+      }, 1000);
+
       setTimeout(() => {
-        document.getElementById("message-2").style.animation = "fadeInText 1.5s ease-in-out forwards";
-      }, 6000);
+        document.getElementById("message-2").style.animation = "fadeInText 0.8s ease-in-out forwards";
+      }, 1800);
+
       setTimeout(() => {
         const secret = document.getElementById("secret-message");
         secret.style.display = "block";
-        secret.style.animation = "fadeInText 1.5s ease-in-out forwards";
+        secret.style.animation = "fadeInText 0.8s ease-in-out forwards";
         confettiBoom();
-      }, 9000);
+      }, 2600);
+
       setTimeout(() => {
         document.getElementById("closeBtn").style.display = 'inline-block';
-      }, 12000);
+      }, 3200);
+
       intervalId = setInterval(confettiBoom, 1000);
       generateBalloons();
     }
@@ -263,5 +269,3 @@
   </script>
 </body>
 </html>
-
-
