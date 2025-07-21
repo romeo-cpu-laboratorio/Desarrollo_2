@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Globos de Caricatura CSS</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff; /* Fondo suave */
+            padding: 50px 20px;
+            overflow: hidden;
+            gap: 40px; /* Espacio entre los grupos de globo y cinta */
+        }
+
+        .balloon-group {
+            position: relative;
+            width: 150px; /* Ancho base para el grupo */
+            height: 250px; /* Alto base para el grupo (globo + cinta) */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            animation: float 4s ease-in-out infinite alternate; /* Animación de flotación */
+        }
+
+        /* Variación para el retraso de la animación y alturas */
+        .balloon-group:nth-child(even) { animation-delay: 0.5s; }
+        .balloon-group:nth-child(3n) { animation-duration: 4.5s; }
+        .balloon-group:nth-child(4n) { transform: scale(0.8); } /* Algunos más pequeños */
+        .balloon-group:nth-child(5n) { animation-delay: 1s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .balloon {
+            width: 100px;
+            height: 120px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Forma ovalada del globo */
+            position: relative;
+            box-shadow: inset -8px -8px 15px rgba(0, 0, 0, 0.2), 3px 3px 8px rgba(0, 0, 0, 0.1); /* Sombra interna y externa */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Borde claro */
+            z-index: 2; /* Para que el globo esté sobre la cinta */
+        }
+
+        /* Colores de los globos */
+        .balloon.red { background: linear-gradient(to bottom right, #ff6b6b, #e63946); }
+        .balloon.blue { background: linear-gradient(to bottom right, #6bb8ff, #3866f2); }
+        .balloon.green { background: linear-gradient(to bottom right, #91ed91, #4CAF50); }
+        .balloon.yellow { background: linear-gradient(to bottom right, #fffb8f, #f7d633); }
+        .balloon.purple { background: linear-gradient(to bottom right, #c188ff, #8a2be2); }
+        .balloon.orange { background: linear-gradient(to bottom right, #ffb06b, #ff7f00); }
+        .balloon.pink { background: linear-gradient(to bottom right, #ffadc1, #f25585); }
+
+        /* Brillo del globo */
+        .balloon::before {
+            content: '';
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            top: 15px;
+            left: 25px;
+            filter: blur(3px); /* Suaviza el brillo */
+            transform: rotate(-30deg);
+            z-index: 3;
+        }
+
+        /* Nudo del globo */
+        .balloon::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            bottom: -6px; /* Posición justo debajo del globo */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .ribbon-container {
+            position: absolute;
+            bottom: 0; /* Posicionar el contenedor de la cinta en la base del grupo */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px; /* Ancho base para el "hilo" principal */
+            height: 120px; /* Longitud total de la cinta */
+            background-color: #aaa; /* Color base del hilo */
+            z-index: 1; /* Debajo del globo */
+            border-radius: 1px;
+        }
+
+        /* Creación de las ondas de la cinta con pseudo-elementos */
+        .ribbon-container::before,
+        .ribbon-container::after {
+            content: '';
+            position: absolute;
+            width: 25px; /* Ancho de la onda */
+            height: 60px; /* Alto de la onda */
+            border-radius: 50%;
+            border: 2px solid;
+            background: none;
+            z-index: 0;
+        }
+
+        /* Primer rizo de la cinta */
+        .ribbon-container::before {
+            top: 10px;
+            left: -15px; /* Posición a la izquierda del hilo principal */
+            transform: rotate(20deg);
+            border-top-color: transparent;
+            border-right-color: transparent;
+            border-bottom-color: currentColor; /* Color de la cinta */
+            border-left-color: currentColor;
+            clip-path: inset(0 0 50% 0); /* Corta la parte superior para hacer el rizo */
+        }
+
+        /* Segundo rizo de la cinta */
+        .ribbon-container::after {
+            top: 50px;
+            right: -15px; /* Posición a la derecha del hilo principal */
+            transform: rotate(-20deg);
+            border-top-color: currentColor;
+            border-right-color: currentColor;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            clip-path: inset(50% 0 0 0); /* Corta la parte inferior para hacer el rizo */
+        }
+
+        /* Colores de las cintas (usando currentColor para heredar del body) */
+        .ribbon-container.ribbon-red { color: #e63946; }
+        .ribbon-container.ribbon-blue { color: #3866f2; }
+        .ribbon-container.ribbon-green { color: #4CAF50; }
+        .ribbon-container.ribbon-yellow { color: #f7d633; }
+        .ribbon-container.ribbon-purple { color: #8a2be2; }
+        .ribbon-container.ribbon-orange { color: #ff7f00; }
+        .ribbon-container.ribbon-pink { color: #f25585; }
+
+    </style>
+</head>
+<body>
+
+    <div class="balloon-group">
+        <div class="balloon red"></div>
+        <div class="ribbon-container ribbon-red"></div>
+    </div>
+
+    <div class="balloon-group">
+        <div class="balloon blue"></div>
+        <div class="ribbon-container ribbon-blue"></div>
+    </div>
+
+    <div class="balloon-group">
+        <div class="balloon green"></div>
+        <div class="ribbon-container ribbon-green"></div>
+    </div>
+
+    <div class="balloon-group">
+        <div class="balloon yellow"></div>
+        <div class="ribbon-container ribbon-yellow"></div>
+    </div>
+
+    <div class="balloon-group">
+        <div class="balloon purple"></div>
+        <div class="ribbon-container ribbon-purple"></div>
+    </div>
+
+    <div class="balloon-group">
+        <div class="balloon orange"></div>
+        <div class="ribbon-container ribbon-orange"></div>
+    </div>
+
+    <div class="balloon-group">
+        <div class="balloon pink"></div>
+        <div class="ribbon-container ribbon-pink"></div>
+    </div>
+
+</body>
+</html>
