@@ -83,8 +83,8 @@
     .balloon {
       position: fixed;
       z-index: 0;
-      width: clamp(40px, 5vw, 60px);
-      height: clamp(40px, 5vw, 60px);
+      width: clamp(58px, 7.25vw, 87px); /* 40px base * 1.45 = 58px min, 60px * 1.45 = 87px max */
+      height: clamp(58px, 7.25vw, 87px);
       border-radius: 50%;
       border: 1.5px solid rgba(0, 0, 0, 0.15);
       box-shadow:
@@ -170,7 +170,7 @@
     }
 
     function generateBalloons() {
-      // Colores vibrantes y saturados, femeninos y elegantes
+      // Colores saturados y femeninos para resaltar
       const colors = [
         'rgba(219, 20, 60, 0.95)',    // rojo fuerte
         'rgba(199, 21, 133, 0.95)',   // medium violet red
@@ -186,7 +186,7 @@
         'rgba(255, 140, 0, 0.95)',    // dark orange
       ];
 
-      const balloonCount = 150;
+      const balloonCount = 350;
       const minTop = 5;
       const maxTop = 180;
 
@@ -251,8 +251,6 @@
         message.style.maxWidth = '90%';
         message.style.wordWrap = 'break-word';
 
-        // Sin globos encima de esta frase, como pediste
-
         document.body.appendChild(message);
         card.remove();
         intervalId = setInterval(confettiBoom, 1000);
@@ -261,4 +259,5 @@
   </script>
 </body>
 </html>
+
 
