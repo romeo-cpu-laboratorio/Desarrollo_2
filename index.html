@@ -1,191 +1,272 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Globos de Caricatura CSS</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f0f8ff; /* Fondo suave */
-            padding: 50px 20px;
-            overflow: hidden;
-            gap: 40px; /* Espacio entre los grupos de globo y cinta */
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🎉 Feliz Cumpleaños, Nao</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      font-size: clamp(14px, 1.5vw + 1vh, 20px);
+    }
 
-        .balloon-group {
-            position: relative;
-            width: 150px; /* Ancho base para el grupo */
-            height: 250px; /* Alto base para el grupo (globo + cinta) */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            animation: float 4s ease-in-out infinite alternate; /* Animación de flotación */
-        }
+    body {
+      font-family: 'Kaushan Script', cursive;
+      background: linear-gradient(to bottom, #f8bbd0 50%, #fff0f5 50%);
+      margin: 0;
+      overflow-x: hidden;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+    }
 
-        /* Variación para el retraso de la animación y alturas */
-        .balloon-group:nth-child(even) { animation-delay: 0.5s; }
-        .balloon-group:nth-child(3n) { animation-duration: 4.5s; }
-        .balloon-group:nth-child(4n) { transform: scale(0.8); } /* Algunos más pequeños */
-        .balloon-group:nth-child(5n) { animation-delay: 1s; }
+    .main-card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 1.5rem 2rem;
+      border-radius: 20px;
+      max-width: 800px;
+      margin: auto;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 10;
+      display: none;
+    }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
+    #main-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: #d81b60;
+      margin-bottom: 1rem;
+      opacity: 0;
+    }
 
-        .balloon {
-            width: 100px;
-            height: 120px;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Forma ovalada del globo */
-            position: relative;
-            box-shadow: inset -8px -8px 15px rgba(0, 0, 0, 0.2), 3px 3px 8px rgba(0, 0, 0, 0.1); /* Sombra interna y externa */
-            border: 1px solid rgba(255, 255, 255, 0.3); /* Borde claro */
-            z-index: 2; /* Para que el globo esté sobre la cinta */
-        }
+    #message-1, #message-2, #secret-message {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      color: #6a1b9a;
+      opacity: 0;
+      margin: 0.5rem 0;
+      text-align: justify;
+      line-height: 1.3;
+    }
 
-        /* Colores de los globos */
-        .balloon.red { background: linear-gradient(to bottom right, #ff6b6b, #e63946); }
-        .balloon.blue { background: linear-gradient(to bottom right, #6bb8ff, #3866f2); }
-        .balloon.green { background: linear-gradient(to bottom right, #91ed91, #4CAF50); }
-        .balloon.yellow { background: linear-gradient(to bottom right, #fffb8f, #f7d633); }
-        .balloon.purple { background: linear-gradient(to bottom right, #c188ff, #8a2be2); }
-        .balloon.orange { background: linear-gradient(to bottom right, #ffb06b, #ff7f00); }
-        .balloon.pink { background: linear-gradient(to bottom right, #ffadc1, #f25585); }
+    #secret-message {
+      color: #4a148c;
+      margin-top: 1rem;
+      display: none;
+    }
 
-        /* Brillo del globo */
-        .balloon::before {
-            content: '';
-            position: absolute;
-            width: 35px;
-            height: 35px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            top: 15px;
-            left: 25px;
-            filter: blur(3px); /* Suaviza el brillo */
-            transform: rotate(-30deg);
-            z-index: 3;
-        }
+    .secret-btn, #closeBtn {
+      margin: 2rem auto 1rem;
+      display: block;
+      padding: 1rem 2rem;
+      font-size: clamp(1rem, 4vw, 1.4rem);
+      background: linear-gradient(to right, #ff4081, #ff80ab);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 20px #ff80ab;
+      animation: pulse 1.5s infinite;
+      max-width: 90%;
+      font-family: 'Kaushan Script', cursive;
+    }
 
-        /* Nudo del globo */
-        .balloon::after {
-            content: '';
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 50%;
-            bottom: -6px; /* Posición justo debajo del globo */
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-        }
+    #closeBtn {
+      background: linear-gradient(to right, #8e24aa, #ce93d8);
+      animation: pulse 2s infinite;
+      display: none;
+    }
 
-        .ribbon-container {
-            position: absolute;
-            bottom: 0; /* Posicionar el contenedor de la cinta en la base del grupo */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px; /* Ancho base para el "hilo" principal */
-            height: 120px; /* Longitud total de la cinta */
-            background-color: #aaa; /* Color base del hilo */
-            z-index: 1; /* Debajo del globo */
-            border-radius: 1px;
-        }
+    .balloon {
+      position: fixed;
+      z-index: 0;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(0, 0, 0, 0.2);
+      box-shadow:
+        inset -4px -6px 10px rgba(255, 255, 255, 0.85),
+        0 3px 10px rgba(0, 0, 0, 0.1);
+      animation: float 6s ease-in-out infinite;
+      will-change: transform;
+      overflow: visible;
+    }
 
-        /* Creación de las ondas de la cinta con pseudo-elementos */
-        .ribbon-container::before,
-        .ribbon-container::after {
-            content: '';
-            position: absolute;
-            width: 25px; /* Ancho de la onda */
-            height: 60px; /* Alto de la onda */
-            border-radius: 50%;
-            border: 2px solid;
-            background: none;
-            z-index: 0;
-        }
+    .balloon::before {
+      content: '';
+      position: absolute;
+      top: 8%;
+      left: 12%;
+      width: 10px;
+      height: 18px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), transparent);
+      border-radius: 50%;
+      filter: blur(1.8px);
+      pointer-events: none;
+      z-index: 2;
+    }
 
-        /* Primer rizo de la cinta */
-        .ribbon-container::before {
-            top: 10px;
-            left: -15px; /* Posición a la izquierda del hilo principal */
-            transform: rotate(20deg);
-            border-top-color: transparent;
-            border-right-color: transparent;
-            border-bottom-color: currentColor; /* Color de la cinta */
-            border-left-color: currentColor;
-            clip-path: inset(0 0 50% 0); /* Corta la parte superior para hacer el rizo */
-        }
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        /* Segundo rizo de la cinta */
-        .ribbon-container::after {
-            top: 50px;
-            right: -15px; /* Posición a la derecha del hilo principal */
-            transform: rotate(-20deg);
-            border-top-color: currentColor;
-            border-right-color: currentColor;
-            border-bottom-color: transparent;
-            border-left-color: transparent;
-            clip-path: inset(50% 0 0 0); /* Corta la parte inferior para hacer el rizo */
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-        /* Colores de las cintas (usando currentColor para heredar del body) */
-        .ribbon-container.ribbon-red { color: #e63946; }
-        .ribbon-container.ribbon-blue { color: #3866f2; }
-        .ribbon-container.ribbon-green { color: #4CAF50; }
-        .ribbon-container.ribbon-yellow { color: #f7d633; }
-        .ribbon-container.ribbon-purple { color: #8a2be2; }
-        .ribbon-container.ribbon-orange { color: #ff7f00; }
-        .ribbon-container.ribbon-pink { color: #f25585; }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
 
-    </style>
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes explodeOut {
+      0% { opacity: 1; transform: scale(1) rotate(0deg); filter: blur(0); }
+      100% { opacity: 0; transform: scale(1.8) rotate(30deg); filter: blur(12px); }
+    }
+
+    @keyframes swing {
+      0% { transform: rotate(3deg); }
+      50% { transform: rotate(-3deg); }
+      100% { transform: rotate(3deg); }
+    }
+
+    @keyframes fallDown {
+      0% { transform: translateY(-200px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+  </style>
 </head>
 <body>
+  <button class="secret-btn" onclick="startCelebration()">✨ ¡Haz clic, Nao! ✨</button>
 
-    <div class="balloon-group">
-        <div class="balloon red"></div>
-        <div class="ribbon-container ribbon-red"></div>
-    </div>
+  <div class="main-card" id="main-card">
+    <h1 id="main-title">🎉🥳 ¡Feliz y bendecido cumpleaños, Nao! 🎂</h1>
+    <p id="message-1">Deseo de corazón que hoy tengas un día maravilloso, rodeada del cariño de tu familia y las personas que más te aprecian. Que cada momento esté lleno de alegría, tranquilidad y buenas energías.</p>
+    <p id="message-2">Ojalá este nuevo ciclo en tu vida te traiga aprendizajes valiosos, metas cumplidas, y muchas razones para sonreír. Que no te falten experiencias que te hagan crecer, momentos que se conviertan en recuerdos bonitos, y logros que te llenen de satisfacción y orgullo.</p>
+    <div id="secret-message">Aunque no hablemos con frecuencia, quiero que sepas que te tengo un aprecio sincero y te deseo lo mejor, no solo hoy, sino siempre. Que la vida te regale muchas bendiciones y que cada paso que des te acerque a lo que sueñas.<br><br>Un fuerte abrazo a la distancia. 🫂🤗</div>
+    <button id="closeBtn" onclick="sayGoodbye(this)">¡Siguiente, Nao!✨</button>
+  </div>
 
-    <div class="balloon-group">
-        <div class="balloon blue"></div>
-        <div class="ribbon-container ribbon-blue"></div>
-    </div>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    let intervalId;
 
-    <div class="balloon-group">
-        <div class="balloon green"></div>
-        <div class="ribbon-container ribbon-green"></div>
-    </div>
+    function confettiBoom() {
+      confetti({ particleCount: 300, spread: 360, origin: { y: Math.random() * 0.6 } });
+    }
 
-    <div class="balloon-group">
-        <div class="balloon yellow"></div>
-        <div class="ribbon-container ribbon-yellow"></div>
-    </div>
+    function generateBalloons() {
+      const colors = [
+        'rgba(218, 0, 96, 0.95)',    // fucsia fuerte
+        'rgba(138, 43, 226, 0.95)',  // azul violeta
+        'rgba(255, 20, 147, 0.95)',  // deep pink
+        'rgba(255, 105, 180, 0.95)', // hot pink
+        'rgba(255, 69, 0, 0.95)',    // rojo anaranjado
+        'rgba(186, 85, 211, 0.95)',  // medium orchid
+        'rgba(199, 21, 133, 0.95)',  // medium violet red
+        'rgba(64, 224, 208, 0.9)',   // turquesa
+        'rgba(255, 0, 255, 0.95)',   // magenta
+        'rgba(255, 127, 80, 0.95)'   // coral
+      ];
 
-    <div class="balloon-group">
-        <div class="balloon purple"></div>
-        <div class="ribbon-container ribbon-purple"></div>
-    </div>
+      const balloonCount = 250;  // MÁS GLOBOS, bastante lleno
+      const minTop = 5;
+      const maxTop = 160;
 
-    <div class="balloon-group">
-        <div class="balloon orange"></div>
-        <div class="ribbon-container ribbon-orange"></div>
-    </div>
+      for (let i = 0; i < balloonCount; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
 
-    <div class="balloon-group">
-        <div class="balloon pink"></div>
-        <div class="ribbon-container ribbon-pink"></div>
-    </div>
+        // Distribución horizontal aleatoria de 0% a 100%
+        balloon.style.left = `${Math.random() * 100}%`;
 
+        // Distribución vertical solo en la parte superior (entre minTop y maxTop)
+        balloon.style.top = `${Math.random() * (maxTop - minTop) + minTop}px`;
+
+        const color = colors[i % colors.length];
+        balloon.style.background = `radial-gradient(circle at 30% 30%, ${color}, rgba(255, 255, 255, 0.7))`;
+
+        balloon.style.animationDuration = (4 + Math.random() * 3) + 's';  // variación en la animación
+
+        document.body.appendChild(balloon);
+      }
+    }
+
+    function startCelebration() {
+      document.querySelector('.secret-btn').style.display = 'none';
+      confettiBoom();
+      const card = document.getElementById("main-card");
+      card.style.display = "block";
+      document.getElementById("main-title").style.animation = "fadeIn 2s ease-in-out forwards";
+      setTimeout(() => {
+        document.getElementById("message-1").style.animation = "fadeInText 1.5s ease-in-out forwards";
+        confettiBoom();
+      }, 3000);
+      setTimeout(() => {
+        document.getElementById("message-2").style.animation = "fadeInText 1.5s ease-in-out forwards";
+      }, 6000);
+      setTimeout(() => {
+        const secret = document.getElementById("secret-message");
+        secret.style.display = "block";
+        secret.style.animation = "fadeInText 1.5s ease-in-out forwards";
+        confettiBoom();
+      }, 9000);
+      setTimeout(() => {
+        document.getElementById("closeBtn").style.display = 'inline-block';
+      }, 12000);
+      intervalId = setInterval(confettiBoom, 1000);
+      generateBalloons();
+    }
+
+    function sayGoodbye(button) {
+      clearInterval(intervalId);
+      const card = document.getElementById("main-card");
+      card.style.animation = "explodeOut 1s ease forwards";
+      setTimeout(() => {
+        const message = document.createElement('div');
+        message.innerText = '🫶Con cariño, Rudy 🤗';
+        message.style.fontSize = '2.4rem';
+        message.style.color = '#6a1b9a';
+        message.style.fontFamily = "'Kaushan Script', cursive";
+        message.style.margin = '40px auto 0';
+        message.style.animation = 'fallDown 1s ease-out forwards, swing 2s infinite ease-in-out';
+        message.style.opacity = 0;
+        message.style.transform = 'translateY(-200px)';
+        message.style.textAlign = 'center';
+        message.style.position = 'relative';
+        message.style.maxWidth = '90%';
+        message.style.wordWrap = 'break-word';
+
+        const balloon1 = document.createElement('div');
+        balloon1.className = 'balloon';
+        balloon1.style.top = '-50px';
+        balloon1.style.left = '30%';
+        balloon1.style.background = 'radial-gradient(circle at 30% 30%, rgba(255,182,193,0.95), rgba(255,105,180,0.7))';
+
+        const balloon2 = balloon1.cloneNode();
+        balloon2.style.left = '60%';
+        balloon2.style.background = 'radial-gradient(circle at 30% 30%, rgba(186,85,211,0.95), rgba(123,94,60,0.7))';
+
+        message.appendChild(balloon1);
+        message.appendChild(balloon2);
+        document.body.appendChild(message);
+        card.remove();
+        intervalId = setInterval(confettiBoom, 1000);
+      }, 1000);
+    }
+  </script>
 </body>
 </html>
+
