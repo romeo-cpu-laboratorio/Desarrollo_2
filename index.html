@@ -83,16 +83,18 @@
     .balloon {
       position: fixed;
       z-index: 0;
-      width: 50px;
-      height: 50px;
+      width: clamp(30px, 3vw, 50px);
+      height: clamp(30px, 3vw, 50px);
       border-radius: 50%;
-      border: 1.5px solid rgba(0, 0, 0, 0.2);
+      border: 1.5px solid rgba(0, 0, 0, 0.15);
       box-shadow:
         inset -4px -6px 10px rgba(255, 255, 255, 0.85),
         0 3px 10px rgba(0, 0, 0, 0.1);
       animation: float 6s ease-in-out infinite;
       will-change: transform;
       overflow: visible;
+      pointer-events: none;
+      user-select: none;
     }
 
     .balloon::before {
@@ -168,22 +170,25 @@
     }
 
     function generateBalloons() {
+      // Paleta femenina, vibrante y elegante
       const colors = [
-        'rgba(218, 0, 96, 0.95)',    // fucsia fuerte
-        'rgba(138, 43, 226, 0.95)',  // azul violeta
-        'rgba(255, 20, 147, 0.95)',  // deep pink
-        'rgba(255, 105, 180, 0.95)', // hot pink
-        'rgba(255, 69, 0, 0.95)',    // rojo anaranjado
-        'rgba(186, 85, 211, 0.95)',  // medium orchid
+        'rgba(219, 112, 147, 0.95)', // pale violet red
         'rgba(199, 21, 133, 0.95)',  // medium violet red
-        'rgba(64, 224, 208, 0.9)',   // turquesa
-        'rgba(255, 0, 255, 0.95)',   // magenta
-        'rgba(255, 127, 80, 0.95)'   // coral
+        'rgba(186, 85, 211, 0.95)',  // medium orchid
+        'rgba(218, 112, 214, 0.95)', // orchid
+        'rgba(255, 105, 180, 0.95)', // hot pink
+        'rgba(255, 20, 147, 0.95)',  // deep pink
+        'rgba(138, 43, 226, 0.95)',  // blue violet
+        'rgba(147, 112, 219, 0.95)', // medium purple
+        'rgba(123, 104, 238, 0.95)', // medium slate blue
+        'rgba(72, 209, 204, 0.9)',   // medium turquoise
+        'rgba(255, 160, 122, 0.95)', // light salmon (coral light)
+        'rgba(255, 99, 71, 0.95)',   // tomato (coral strong)
       ];
 
-      const balloonCount = 250;  // MÁS GLOBOS, bastante lleno
+      const balloonCount = 320;
       const minTop = 5;
-      const maxTop = 160;
+      const maxTop = 180;
 
       for (let i = 0; i < balloonCount; i++) {
         const balloon = document.createElement('div');
@@ -198,7 +203,7 @@
         const color = colors[i % colors.length];
         balloon.style.background = `radial-gradient(circle at 30% 30%, ${color}, rgba(255, 255, 255, 0.7))`;
 
-        balloon.style.animationDuration = (4 + Math.random() * 3) + 's';  // variación en la animación
+        balloon.style.animationDuration = (4 + Math.random() * 3) + 's';
 
         document.body.appendChild(balloon);
       }
@@ -249,18 +254,8 @@
         message.style.maxWidth = '90%';
         message.style.wordWrap = 'break-word';
 
-        const balloon1 = document.createElement('div');
-        balloon1.className = 'balloon';
-        balloon1.style.top = '-50px';
-        balloon1.style.left = '30%';
-        balloon1.style.background = 'radial-gradient(circle at 30% 30%, rgba(255,182,193,0.95), rgba(255,105,180,0.7))';
+        // Sin globos sobre esta frase, como pediste
 
-        const balloon2 = balloon1.cloneNode();
-        balloon2.style.left = '60%';
-        balloon2.style.background = 'radial-gradient(circle at 30% 30%, rgba(186,85,211,0.95), rgba(123,94,60,0.7))';
-
-        message.appendChild(balloon1);
-        message.appendChild(balloon2);
         document.body.appendChild(message);
         card.remove();
         intervalId = setInterval(confettiBoom, 1000);
@@ -269,4 +264,5 @@
   </script>
 </body>
 </html>
+
 
